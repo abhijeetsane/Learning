@@ -1,0 +1,20 @@
+Set these in case you want to use a seperate gcc / compiler for the build.
+------------------------------------------------------------------------
+Side effects: Changing this causes the symbols to be not recognized . 
+              Needs the same compiler as the one used to compile python for the symbols to be resolved.
+
+
+How to find what parameters to set 
+-----------------------------------
+
+>>> from distutils import sysconfig
+>>> sysconfig.get_config_var('LDSHARED')
+'gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions'
+>>> sysconfig.get_config_var('CC')
+'gcc -pthread'
+
+
+Example of Environment variables to be changed 
+-----------------------------------
+export LDSHARED='gcc -pthread -shared -L/usr/local/lib  -fstack-protector-strong'
+export CC='gcc -pthread'
