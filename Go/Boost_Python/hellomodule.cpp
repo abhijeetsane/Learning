@@ -1,0 +1,37 @@
+#include <iostream>
+#include <string>
+#include <boost/python.hpp>
+using		namespace boost::python;
+
+
+class		Greeter
+{
+private:
+    std::string greeting;
+public:
+    Greeter(std::string msg = "")
+    {
+        std::cout << "Inside constructor" << std::endl;
+        this->greeting = msg;
+    }
+    ~Greeter()
+    {
+        std::cout << "Inside destructor" << std::endl;
+    }
+    void		setGreeting(std::string msg)
+    {
+        this->greeting = msg;
+    }
+    void		doGreet() const
+    {
+        std::cout << this->greeting << std::endl;
+    }
+};
+
+BOOST_PYTHON_MODULE(hello)
+{
+    class_ < Greeter > ("Greeter", init < std::string > ())
+    .def("doGreet", &Greeter::doGreet)
+    .def("setGreeting", &Greeter::setGreeting)
+    ;
+}
